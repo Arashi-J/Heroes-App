@@ -7,11 +7,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
 import { ErrorPageComponent } from './shared/error-page/error-page.component';
+import { HeroeTarjetaComponent } from './heroes/components/heroe-tarjeta/heroe-tarjeta.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ErrorPageComponent
+    ErrorPageComponent,
   ],
   imports: [
     BrowserModule,
