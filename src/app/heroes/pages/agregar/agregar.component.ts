@@ -3,6 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Heroe, Publisher } from '../../interfaces/heroe.interface';
 import { HeroesService } from '../../services/heroes.service';
 import { switchMap } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmarComponent } from '../../components/confirmar/confirmar.component';
 
 @Component({
   selector: 'app-agregar',
@@ -39,11 +42,13 @@ export class AgregarComponent implements OnInit {
   constructor(
     private heroesService: HeroesService,
     private activatedRoute: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog) { }
 
   ngOnInit(): void {
 
-    if(!this.router.url.includes('editar')){
+    if (!this.router.url.includes('editar')) {
       return
     }
 
@@ -61,16 +66,45 @@ export class AgregarComponent implements OnInit {
 
     if (this.heroe.id) {
       //Actualizar
-      this.heroesService.actualizarHeroe(this.heroe).subscribe(heroe => console.log('Actualizando', heroe))
+      this.heroesService.actualizarHeroe(this.heroe)
+        .subscribe(heroe => this.mostrarSnakbar(`Registro Actualizado, ${heroe.superhero}`))
 
     } else {
       //Crear
       this.heroesService.agregarHeroe(this.heroe).subscribe(heroe => {
         this.router.navigate(['/heroes/editar', heroe.id]);
+        this.mostrarSnakbar(`Registro Creado, ${heroe.superhero}`);
       })
 
     }
 
+  }
+
+  borrar() {
+
+    const dialog = this.dialog.open(ConfirmarComponent, {
+      width: '250px',
+      data: this.heroe
+    });
+
+    dialog.afterClosed().subscribe(
+      (result) => {
+        if (result) {
+          this.heroesService.borrarHeroe(this.heroe.id!).subscribe(resp => {
+            this.router.navigate(['/heroes']);
+          })
+        }
+      }
+    )
+
+
+  }
+
+
+  mostrarSnakbar(mensaje: string) {
+    this.snackBar.open(mensaje, 'Ok!', {
+      duration: 2500
+    });
   }
 
 }

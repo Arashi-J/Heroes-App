@@ -169,12 +169,12 @@
     },
     {
       "superhero": "Robin",
-      "alter_ego": "",
-      "characters": "",
-      "first_appearance": "",
+      "alter_ego": "Dick Grayson",
+      "characters": "Dick Grayson, Damian Wayne",
+      "first_appearance": "Primer Comic",
       "publisher": "DC Comics",
       "alt_img": "https://upload.wikimedia.org/wikipedia/commons/f/f8/Burt_Ward_Robin.jpg",
-      "id": "Jz2Nr8D"
+      "id": "W9X6zxz"
     }
   ]
 }
